@@ -1,27 +1,17 @@
-// Intersection Observer to add the flip-in class when elements enter view
-const observer = new IntersectionObserver(
-  (entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-inview');
-        observer.unobserve(entry.target); // animate once
-      }
-    });
-  },
-  { threshold: 0.15 }
-);
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile nav toggle
+  const navToggle = document.querySelector('.nav-toggle');
+  const menu = document.getElementById('menu');
+  navToggle.addEventListener('click', () => {
+    const expanded = navToggle.getAttribute('aria-expanded') === 'true' || false;
+    navToggle.setAttribute('aria-expanded', !expanded);
+    menu.classList.toggle('open');
+  });
 
-// Watch all elements with .flip
-document.querySelectorAll('.flip').forEach((el) => observer.observe(el));
-
-// Mobile nav toggle
-const toggle = document.querySelector('.nav-toggle');
-const menu = document.getElementById('menu');
-toggle?.addEventListener('click', () => {
-  const open = toggle.getAttribute('aria-expanded') === 'true';
-  toggle.setAttribute('aria-expanded', String(!open));
-  menu.classList.toggle('open');
+  // Simple flip animation for sections
+  document.querySelectorAll('.flip').forEach((el, i) => {
+    setTimeout(() => {
+      el.classList.add('visible');
+    }, 200 * i);
+  });
 });
-
-// Simple year stamp
-document.getElementById('year').textContent = new Date().getFullYear();
